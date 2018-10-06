@@ -2,12 +2,15 @@ const {
   getBarsBeats,
   addTimes,
   getTransportTimes,
+  mergeMusicDataPart
 } = toneRhythm; // eslint-disable-line
 
 const expect = chai.expect; // eslint-disable-line 
 
 /* eslint-disable max-len */
-const mariaDurationsNewFormat = ['8n', '8n', ['2n', '4n'], '8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n', ['2n', '4n'], '8n', '8n', '8n', '8n', '8n', ['4n', '8n'], '8n', '8n', '8n', '8n', '8n', '4n', '4n', ['2n', '4n', '8n'], '8n', '8n', ['2n', '4n'], '8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n', ['2n', '4n'], '8n', '8n', '8n', '8n', '8n', ['4n', '8n'], '8n', '8n', '8n', '8n', '8n', '4n', '4n', ['2n', '4n', '8n']];
+const mariaPitches = ["Eb4", "A4", "Bb4", "Eb4", "A4", "Bb4", "C5", "A4", "Bb4", "C5", "A4", "Bb4", "Bb4", "A4", "G4", "F4", "Eb4", "F4", "Bb4", "Ab4", "G4", "F4", "Eb4", "F4", "Eb4", "G4", "Eb4", "A4", "Bb4", "Eb4", "A4", "Bb4", "C5", "A4", "Bb4", "C5", "D5", "Bb4", "D5", "Eb5", "D5", "C5", "Bb4", "D5", "D5", "Eb5", "D5", "C5", "Bb4", "D5", "Eb5", "F5"];
+
+const mariaDurations = ['8n', '8n', ['2n', '4n'], '8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n', ['2n', '4n'], '8n', '8n', '8n', '8n', '8n', ['4n', '8n'], '8n', '8n', '8n', '8n', '8n', '4n', '4n', ['2n', '4n', '8n'], '8n', '8n', ['2n', '4n'], '8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n', ['2n', '4n'], '8n', '8n', '8n', '8n', '8n', ['4n', '8n'], '8n', '8n', '8n', '8n', '8n', '4n', '4n', ['2n', '4n', '8n']];
 
 const mariaDurationsWithRests = ['8n', '16n', ['r', '16n'], '2n', ['r', '4n'], '8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n', ['2n', '4n'], '8n', '8n', '8n', '8n', '8n', ['4n', '8n'], '8n', '8n', '8n', '8n', '8n', '4n', '4n', ['2n', '4n', '8n'], '8n', '8n', ['2n', '4n'], '8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n', ['2n', '4n'], '8n', '8n', '8n', '8n', '8n', ['4n', '8n'], '8n', '8n', '8n', '8n', '8n', '4n', '4n', ['2n', '4n', '8n']];
 
@@ -38,10 +41,86 @@ describe('tone-rhythm', () => {
       expect(addTimes('4n.')).to.equal('4n.');
     });
   });
-  it('getTransportTimes works', () => {
-    expect(typeof getTransportTimes).to.equal('function');
-    /** yes, these are equivalent! */
-    expect(getTransportTimes(mariaDurationsNewFormat)).to.deep.equal(mariaTransportTimes);
-    expect(getTransportTimes(mariaDurationsWithRests)).to.deep.equal(mariaTransportTimes);
+  describe('getTransportTimes', () => {
+    it('works as expected', () => {
+      expect(typeof getTransportTimes).to.equal('function');
+      /** yes, these are equivalent! */
+      expect(getTransportTimes(mariaDurations)).to.deep.equal(mariaTransportTimes);
+      expect(getTransportTimes(mariaDurationsWithRests)).to.deep.equal(mariaTransportTimes);
+    });
+    it('takes a start time', () => {
+      expect(getTransportTimes(mariaDurations, '0:3:2')[0]).to.deep.equal('0:3:2');
+    });
+  });
+  describe('mergeMusicDataPart', () => {
+    it('works with just `rhythms` property', () => {
+      expect(typeof mergeMusicDataPart).to.equal('function');
+      const justRhythm = mergeMusicDataPart({
+        rhythms: mariaDurations
+      });
+      expect(justRhythm[0]).to.deep.equal({
+        time: 0,
+        duration: '8n'
+      });
+    });
+    it('works with `times` and `rhythms` properties', () => {
+      expect(typeof mergeMusicDataPart).to.equal('function');
+      const mergedData = mergeMusicDataPart({
+        rhythms: mariaDurations,
+        times: mariaTransportTimes
+      });
+      expect(mergedData[0]).to.deep.equal({
+        time: 0,
+        duration: '8n'
+      });
+    });
+    it('works with `notes` `times` and `rhythms` properties', () => {
+      expect(typeof mergeMusicDataPart).to.equal('function');
+      const mergedData = mergeMusicDataPart({
+        rhythms: mariaDurations,
+        times: mariaTransportTimes,
+        notes: mariaPitches
+      });
+      expect(mergedData[0]).to.deep.equal({
+        time: 0,
+        duration: '8n',
+        note: 'Eb4'
+      });
+    });
+    it('works with `startTime` `notes` and `rhythms` properties', () => {
+      expect(typeof mergeMusicDataPart).to.equal('function');
+      const mergedData = mergeMusicDataPart({
+        rhythms: mariaDurations,
+        notes: mariaPitches,
+        startTime: '0:3:2'
+      });
+      console.log(mergedData);
+      expect(mergedData[0]).to.deep.equal({
+        time: '0:3:2',
+        duration: '8n',
+        note: 'Eb4'
+      });
+    });
+    it('ignores `startTime` if `times` are passed in', () => {
+      expect(typeof mergeMusicDataPart).to.equal('function');
+      const mergedData = mergeMusicDataPart({
+        rhythms: mariaDurations,
+        times: mariaTransportTimes,
+        startTime: '0:3:2'
+      });
+      expect(mergedData[0]).to.deep.equal({
+        time: 0,
+        duration: '8n',
+      });
+    });
+    it('errors if `rhythms` aren\'t passed in', () => {
+      let err = false;
+      try {
+        mergeMusicDataPart({notes: mariaPitches});
+      } catch (e) {
+        err = true;
+      }
+      expect(err).to.equal(true);
+    });
   });
 });

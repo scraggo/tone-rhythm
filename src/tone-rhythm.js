@@ -37,27 +37,32 @@ const getBarsBeats = (value) => {
 /**
  * If item isn't an array, return item.
  * Else if item is array, return summation of items in Tone's bars/beats format.
+ *    Note: The first item of the array may be 'r' (rest)
  * @param {array|string} item
  */
 const addTimes = (item) => {
   if (!Array.isArray(item)) return item;
+  if (item[0] === 'r') item = item.slice(1);
   return item.reduce((acc, cur) => {
     return getBarsBeats(ToneTime(acc) + ToneTime(cur));
   });
 };
 
-const getTransportTimes = (arrOfTimes, startTime = 0) => {
+/**
+ * Given an array of durations (see API), return transport times.
+ * @param {array} arrOfDurations - see API
+ * @param {number|string} startTime - a start time in Tone's Time format.
+ */
+const getTransportTimes = (arrOfDurations, startTime = 0) => {
   let accumulator = startTime;
   const timesAccumulated = [accumulator];
-  arrOfTimes.forEach((time) => {
+  arrOfDurations.forEach((time) => {
     if (Array.isArray(time)) {
+      accumulator = addTimes([...time, accumulator]);
       if (time[0] === 'r') {
-        const nonRestValues = addTimes(time.slice(1));
-        accumulator = addTimes([nonRestValues, accumulator]);
         const lastIdx = timesAccumulated.length - 1;
         timesAccumulated[lastIdx] = accumulator;
       } else {
-        accumulator = addTimes([...time, accumulator]);
         timesAccumulated.push(accumulator);
       }
     } else {
@@ -68,8 +73,39 @@ const getTransportTimes = (arrOfTimes, startTime = 0) => {
   return timesAccumulated.slice(0, -1);
 };
 
+/**
+ * Returns array of objects for consumption by Tone.Part
+ * @param {object} config - 
+ *    required property: {array} rhythms - see API
+ *    optional properties:
+ *      {array} notes
+ *      {array} times
+ *      {array} velocities
+ *      {string|number} startTime
+ */
+const mergeMusicDataPart = (config) => {
+  const { notes, rhythms, velocities, startTime} = config;
+  let { times } = config;
+  if (!rhythms || !Array.isArray(rhythms)) {
+    throw TypeError('Expected "rhythms" property with type "Array"');
+  }
+  if (!times) {
+    times = getTransportTimes(rhythms, startTime);
+  }
+  return rhythms.map((rhythm, i) => {
+    const musicData = {
+      time: times[i],
+      duration: addTimes(rhythm)
+    };
+    if (notes) musicData.note = notes[i];
+    if (velocities) musicData.velocity = velocities[i];
+    return musicData;
+  });
+};
+
 module.exports = {
   getBarsBeats,
   addTimes,
-  getTransportTimes
+  getTransportTimes,
+  mergeMusicDataPart
 };
