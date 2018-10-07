@@ -55,10 +55,10 @@ const addTimes = (item) => {
 
 /**
  * Given an array of durations (see API), return transport times.
+ * see [README.md](README.md) for examples
  * @param {string[]} arrOfDurations - see README.md API
  * @param {number|string} [startTime=0] - a start time in Tone's Time format.
  * @return {Array} of start times in Tone's bars/beats format.
- * @example see [README.md](README.md) examples
  */
 const getTransportTimes = (arrOfDurations, startTime = 0) => {
   let accumulator = startTime;
@@ -81,6 +81,7 @@ const getTransportTimes = (arrOfDurations, startTime = 0) => {
 };
 
 /**
+ * see [README.md](README.md) for examples
  * @param {Object} config (see properties below)
  * @param {Array} config.rhythms - see API
  * @param {string[]} [config.notes] - ex: ['C4', 'D4', 'E4']
@@ -88,7 +89,6 @@ const getTransportTimes = (arrOfDurations, startTime = 0) => {
  * @param {string|number} [config.startTime] - see startTime of `getTransportTimes`
  * @return {Array} of objects for consumption by Tone.Part.
  * Object properties always include time and duration. May also include notes and velocities.
- * @example see [README.md](README.md)
  */
 const mergeMusicDataPart = (config) => {
   const { notes, rhythms, velocities, startTime} = config;

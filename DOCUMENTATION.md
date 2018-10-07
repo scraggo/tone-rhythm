@@ -72,6 +72,7 @@ If item was a string, it gets returned as is.
 #### getTransportTimes(arrOfDurations[, startTime&#x3D;0]) 
 
 Given an array of durations (see API), return transport times.
+see [README.md](README.md) for examples
 
 
 
@@ -86,13 +87,6 @@ Given an array of durations (see API), return transport times.
 
 
 
-##### Examples
-
-```javascript
-see [README.md](README.md) examples
-```
-
-
 ##### Returns
 
 
@@ -102,7 +96,7 @@ see [README.md](README.md) examples
 
 #### mergeMusicDataPart(config) 
 
-
+see [README.md](README.md) for examples
 
 
 
@@ -118,13 +112,6 @@ see [README.md](README.md) examples
 | config.startTime | `string` `number`  | - see startTime of `getTransportTimes` | *Optional* |
 
 
-
-
-##### Examples
-
-```javascript
-see [README.md](README.md)
-```
 
 
 ##### Returns
