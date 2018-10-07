@@ -1,5 +1,6 @@
-# tone-rhythm *1.0.0*
+# tone-rhythm *0.0.0*
 
+> Generate an array of Tone.Transport times for use in Tone.Part
 
 
 ### src/tone-rhythm.js
@@ -54,7 +55,7 @@ getBarsBeats('4n') -> '0:1:0'
 ##### Examples
 
 ```javascript
-addTimes('4n') -> '0:1:0'
+addTimes('4n.') -> '4n.'
 ```
 ```javascript
 addTimes(['8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n']) -> '1:1:0'

@@ -1,7 +1,7 @@
 {
   "name": "tone-rhythm",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.0",
+  "description": "Generate an array of Tone.Transport times for use in Tone.Part",
   "main": "dist/tone-rhythm.min.js",
   "scripts": {
     "test": "npm run build && open index.html # RUNS IN BROWSER WITH MOCHA",
@@ -9,9 +9,9 @@
     "build": "webpack -p",
     "doc": "doxdox src/tone-rhythm.js --layout markdown --output DOCUMENTATION.md"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [ "Javascript", "Music Composition", "Web Audio", "Web Audio API", "Playback", "Instrument", "Music" ],
+  "author": "https://github.com/scraggo",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",

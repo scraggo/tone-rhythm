@@ -42,7 +42,7 @@ const getBarsBeats = (value) => {
  * @return {string} - if item is an array, returns 
  * rhythm value converted to Tone's bars/beats format.
  * If item was a string, it gets returned as is.
- * @example addTimes('4n') -> '0:1:0'
+ * @example addTimes('4n.') -> '4n.'
  * @example addTimes(['8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n']) -> '1:1:0'
  */
 const addTimes = (item) => {
