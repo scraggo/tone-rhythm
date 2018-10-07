@@ -1,24 +1,25 @@
 const ToneTime = require('tone/Tone/type/Time');
 
-/**
- * tone-rhythm
- * Given an array of rhythms, these methods contribute towards creating an
- * array of Tone.Transport times given an array of musical rhythms in
- * various formats that tone understands.
- * API:
- * Values which can populate a rhythms array:
- * '4n' - a 'notation' value
- * ['4n', '8t'] - an array of 'notation' values which will be added together
- * ['r', '2n'] - an array that has 'r' at first index will be a rest
- * ['r', '2n', '8t'] - (see above about 'r') and the remaining values
- *                      will be added together
- * It's **not** recommended to use Tone's seconds format.
- * see tests for concrete examples
- */
+/*
+tone-rhythm
+Given an array of rhythms, these methods contribute towards creating an
+array of Tone.Transport times given an array of musical rhythms in
+various formats that tone understands.
+API:
+Values which can populate a rhythms array:
+'4n' - a 'notation' value
+['4n', '8t'] - an array of 'notation' values which will be added together
+['r', '2n'] - an array that has 'r' at first index will be a rest
+['r', '2n', '8t'] - (see above about 'r') and the remaining values
+                     will be added together
+It's **not** recommended to use Tone's seconds format.
+see tests for concrete examples
+*/
 
 /**
- * Returns a rhythm value converted to Tone's bars/beats format.
- * @param {string} time - a rhythm value Tone recognizes
+ * @param {string|number} value - a rhythm value Tone recognizes
+ * @return {string} - rhythm value converted to Tone's bars/beats format.
+ * @example getBarsBeats('4n') -> '0:1:0'
  */
 const getBarsBeats = (value) => {
   const validTypes = new Set(['string', 'number']);
@@ -35,10 +36,14 @@ const getBarsBeats = (value) => {
 };
 
 /**
- * If item isn't an array, return item.
- * Else if item is array, return summation of items in Tone's bars/beats format.
+ * @param {string[]|string} item
+ * if item is array, return summation of items in Tone's bars/beats format.
  *    Note: The first item of the array may be 'r' (rest)
- * @param {array|string} item
+ * @return {string} - if item is an array, returns 
+ * rhythm value converted to Tone's bars/beats format.
+ * If item was a string, it gets returned as is.
+ * @example addTimes('4n') -> '0:1:0'
+ * @example addTimes(['8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n']) -> '1:1:0'
  */
 const addTimes = (item) => {
   if (!Array.isArray(item)) return item;
@@ -50,8 +55,10 @@ const addTimes = (item) => {
 
 /**
  * Given an array of durations (see API), return transport times.
- * @param {array} arrOfDurations - see API
- * @param {number|string} startTime - a start time in Tone's Time format.
+ * @param {string[]} arrOfDurations - see README.md API
+ * @param {number|string} [startTime=0] - a start time in Tone's Time format.
+ * @return {Array} of start times in Tone's bars/beats format.
+ * @example see README.md examples
  */
 const getTransportTimes = (arrOfDurations, startTime = 0) => {
   let accumulator = startTime;
@@ -74,14 +81,14 @@ const getTransportTimes = (arrOfDurations, startTime = 0) => {
 };
 
 /**
- * Returns array of objects for consumption by Tone.Part
- * @param {object} config - 
- *    required property: {array} rhythms - see API
- *    optional properties:
- *      {array} notes
- *      {array} times
- *      {array} velocities
- *      {string|number} startTime
+ * @param {Object} config (see properties below)
+ * @param {Array} config.rhythms - see API
+ * @param {string[]} [config.notes] - ex: ['C4', 'D4', 'E4']
+ * @param {Array} [config.times] - see return of `getTransportTimes`
+ * @param {string|number} [config.startTime] - see startTime of `getTransportTimes`
+ * @return {Array} of objects for consumption by Tone.Part.
+ * Object properties always include time and duration. May also include notes and velocities.
+ * @example see README.md
  */
 const mergeMusicDataPart = (config) => {
   const { notes, rhythms, velocities, startTime} = config;

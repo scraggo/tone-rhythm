@@ -1,12 +1,13 @@
 {
-  "name": "tone-rhythm-adapter",
+  "name": "tone-rhythm",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/webpack-numbers.js",
+  "main": "dist/tone-rhythm.min.js",
   "scripts": {
-    "test": "echo 'no test.'",
-    "dev": "webpack --mode development",
-    "build": "webpack"
+    "test": "npm run build && open index.html # RUNS IN BROWSER WITH MOCHA",
+    "dev": "webpack --watch --mode development",
+    "build": "webpack -p",
+    "doc": "doxdox src/tone-rhythm.js --layout markdown --output DOCUMENTATION.md"
   },
   "keywords": [],
   "author": "",
@@ -16,11 +17,11 @@
     "@babel/preset-env": "^7.1.0",
     "babel-loader": "^8.0.4",
     "chai": "^4.2.0",
+    "doxdox": "^2.0.3",
     "mocha": "^5.2.0",
     "webpack": "^4.20.2",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "tone": ">=0.12.0"
   },
-  "dependencies": {
-    "tone": "^0.12.80"
-  }
+  "dependencies": {}
 }

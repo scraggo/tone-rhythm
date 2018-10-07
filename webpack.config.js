@@ -4,7 +4,7 @@ module.exports = {
   entry: './src/tone-rhythm.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'tone-rhythm.js',
+    filename: 'tone-rhythm.min.js',
     library: 'toneRhythm'
   },
   resolve: {
