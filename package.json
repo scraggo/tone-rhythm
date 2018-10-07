@@ -1,6 +1,6 @@
 {
   "name": "tone-rhythm",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "Generate an array of Tone.Transport times for use in Tone.Part",
   "main": "dist/tone-rhythm.min.js",
   "scripts": {
@@ -9,8 +9,22 @@
     "build": "webpack -p",
     "doc": "doxdox src/tone-rhythm.js --layout markdown --output DOCUMENTATION.md"
   },
-  "keywords": [ "Javascript", "Music Composition", "Web Audio", "Web Audio API", "Playback", "Instrument", "Music", "Tone", "tone-rhythm" ],
+  "keywords": [
+    "Javascript",
+    "Music Composition",
+    "Web Audio",
+    "Web Audio API",
+    "Playback",
+    "Instrument",
+    "Music",
+    "Tone",
+    "tone-rhythm"
+  ],
   "author": "https://github.com/scraggo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scraggo/tone-rhythm.git"
+  },
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.1.2",
