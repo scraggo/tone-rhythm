@@ -5,7 +5,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'tone-rhythm.min.js',
-    library: 'toneRhythm'
+    library: 'toneRhythm',
+    libraryTarget : "umd",
   },
   resolve: {
     modules: ['node_modules/', 'node_modules/tone']
