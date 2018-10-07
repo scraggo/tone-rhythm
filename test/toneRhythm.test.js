@@ -17,6 +17,11 @@ const mariaDurationsWithRests = ['8n', '16n', ['r', '16n'], '2n', ['r', '4n'], '
 const mariaTransportTimes = [0, "0:0:2", "0:1:0", "1:0:0", "1:0:2", "1:1:0.667", "1:1:3.334", "1:2:2", "1:3:0.667", "1:3:3.334", "2:0:2", "2:1:0", "3:0:0", "3:0:2", "3:1:0", "3:1:2", "3:2:0", "3:2:2", "4:0:0", "4:0:2", "4:1:0", "4:1:2", "4:2:0", "4:2:2", "4:3:2", "5:0:2", "6:0:0", "6:0:2", "6:1:0", "7:0:0", "7:0:2", "7:1:0.667", "7:1:3.334", "7:2:2", "7:3:0.667", "7:3:3.334", "8:0:2", "8:1:0", "9:0:0", "9:0:2", "9:1:0", "9:1:2", "9:2:0", "9:2:2", "10:0:0", "10:0:2", "10:1:0", "10:1:2", "10:2:0", "10:2:2", "10:3:2", "11:0:2"];
 
 describe('tone-rhythm', () => {
+  let testTransportTimes;
+  let err = false;
+  beforeEach(() => {
+    err = false;
+  });
   describe('getBarsBeats', () => {
     it('converts as expected', () => {
       expect(typeof getBarsBeats).to.equal('function');
@@ -25,7 +30,6 @@ describe('tone-rhythm', () => {
       expect(getBarsBeats('0:1:0.001')).to.equal('0:1:0');
     });
     it('errors if invalid type', () => {
-      let err = false;
       try {
         getBarsBeats(['4n']);
       } catch (e) {
@@ -44,21 +48,25 @@ describe('tone-rhythm', () => {
   describe('getTransportTimes', () => {
     it('works as expected', () => {
       expect(typeof getTransportTimes).to.equal('function');
+      testTransportTimes = getTransportTimes(mariaDurations);
+      expect(testTransportTimes.length).to.equal(mariaDurations.length);
       /** yes, these are equivalent! */
-      expect(getTransportTimes(mariaDurations)).to.deep.equal(mariaTransportTimes);
+      expect(testTransportTimes).to.deep.equal(mariaTransportTimes);
       expect(getTransportTimes(mariaDurationsWithRests)).to.deep.equal(mariaTransportTimes);
     });
     it('takes a start time', () => {
-      expect(getTransportTimes(mariaDurations, '0:3:2')[0]).to.deep.equal('0:3:2');
+      testTransportTimes = getTransportTimes(mariaDurations, '0:3:2');
+      expect(testTransportTimes[0]).to.deep.equal('0:3:2');
+      expect(testTransportTimes.length).to.equal(mariaDurations.length);
     });
   });
   describe('mergeMusicDataPart', () => {
     it('works with just `rhythms` property', () => {
       expect(typeof mergeMusicDataPart).to.equal('function');
-      const justRhythm = mergeMusicDataPart({
+      const mergedData = mergeMusicDataPart({
         rhythms: mariaDurations
       });
-      expect(justRhythm[0]).to.deep.equal({
+      expect(mergedData[0]).to.deep.equal({
         time: 0,
         duration: '8n'
       });
@@ -94,7 +102,6 @@ describe('tone-rhythm', () => {
         notes: mariaPitches,
         startTime: '0:3:2'
       });
-      console.log(mergedData);
       expect(mergedData[0]).to.deep.equal({
         time: '0:3:2',
         duration: '8n',
@@ -114,7 +121,6 @@ describe('tone-rhythm', () => {
       });
     });
     it('errors if `rhythms` aren\'t passed in', () => {
-      let err = false;
       try {
         mergeMusicDataPart({notes: mariaPitches});
       } catch (e) {
