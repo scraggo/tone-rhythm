@@ -7,8 +7,6 @@ various formats that tone understands.
 
 Written for exclusive use with [Tone.js](https://tonejs.github.io/).
 
-Can be used in-browser or imported as a node module.
-
 ## Features
 
 - Works with latest version of Tone (as of Oct 6, 2018)
@@ -36,19 +34,30 @@ The third parameter in `triggerAttackRelease` is the start time of the note we'r
 
 I found enlightenment after reading [Music Theory using Tone.js - Play Rhythms](https://www.guitarland.com/MusicTheoryWithToneJS/PlayRhythms.html). If you have an array of durations, accumulating the rhythmic values to generate a start time is the approach the article took to making rhythmic music with Tone. I adapted and modified one of the author's algorithms.
 
-## Usage
+## Getting Started
 
-For now:
+### Prerequisites
 
-- use `dist/tone-rhythm.min.js` for any imports
-- see `src/tone-rhythm.js` for full documentation
+Tone.js (v0.12.x or higher)
 
-After publish:
+### Installing
+
+For now, clone the repo and insert the script manually:
+
+- import `dist/tone-rhythm.min.js` into html page:
+
+```html
+<head>
+  <script src="dist/tone-rhythm.min.js"></script>
+</head>
+```
+
+- or `import toneRhythm from 'tone-rhythm'` (can use ES6 version in `src/tone-rhythm.js`)
+
+(not yet available)
 
 ```bash
 `npm install tone-rhythm`
-`import toneRhythm from 'tone-rhythm'`
-(can use ES6 version in `src/tone-rhythm.js`)
 ```
 
 ## API
@@ -62,6 +71,8 @@ Values which can populate a rhythms array:
                      will be added together
 
 It's **not** recommended to use Tone's seconds format.
+
+See [documentation](DOCUMENTATION.md) and below for library usage.
 
 ## Examples ("Maria" by Leonard Bernstein)
 
@@ -109,91 +120,10 @@ const melodyPart = new Tone.Part((time, value) => {
 }, mergedData).start(0);
 ```
 
-
----
-
-One Paragraph of project description goes here
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+`npm run test` - opens the tests in-browser
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+Thank you [https://www.guitarland.com](https://www.guitarland.com)!
