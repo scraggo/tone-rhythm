@@ -38,26 +38,26 @@ I found enlightenment after reading [Music Theory using Tone.js - Play Rhythms](
 
 ### Prerequisites
 
-Tone.js (v0.12.x or higher)
+[Tone.js](https://tonejs.github.io/) (v0.12.x or higher)
 
 ### Installing
 
-For now, clone the repo and insert the script manually:
+`npm install tone-rhythm`
 
-- import `dist/tone-rhythm.min.js` into html page:
+Or clone the repo and copy `dist/tone-rhythm.min.js` into your project.
+
+### Usage
+
+`import toneRhythm from 'tone-rhythm'`
+
+or `import { mergeMusicDataPart } from 'tone-rhythm'`
+
+Or import `tone-rhythm.min.js` into html page:
 
 ```html
 <head>
-  <script src="dist/tone-rhythm.min.js"></script>
+  <script src="node_modules/tone-rhythm/dist/tone-rhythm.min.js"></script>
 </head>
-```
-
-- or `import toneRhythm from 'tone-rhythm'` (can use ES6 version in `src/tone-rhythm.js`)
-
-(not yet available)
-
-```bash
-`npm install tone-rhythm`
 ```
 
 ## API
@@ -72,7 +72,7 @@ Values which can populate a rhythms array:
 
 It's **not** recommended to use Tone's seconds format.
 
-See [documentation](DOCUMENTATION.md) and below for library usage.
+See [documentation](DOCUMENTATION.md) and below for tone-rhythm library usage.
 
 ## Examples ("Maria" by Leonard Bernstein)
 
@@ -126,4 +126,4 @@ const melodyPart = new Tone.Part((time, value) => {
 
 ## Acknowledgments
 
-Thank you [https://www.guitarland.com](https://www.guitarland.com)!
+Thank you [https://www.guitarland.com](https://www.guitarland.com) and the creator of [Tone.js](https://tonejs.github.io/).
