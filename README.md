@@ -12,7 +12,7 @@ Written for exclusive use with [Tone.js](https://tonejs.github.io/).
 - Works with latest version of Tone (as of Oct 6, 2018)
 - Works in-browser (transpiled) or in node (ES6)
 - Light footprint (16kb)
-- Intuitive API
+- Intuitive and fully-documented API
 
 ### Why use tone-rhythm?
 
