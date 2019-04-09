@@ -1,9 +1,37 @@
-# tone-rhythm *0.0.0*
+# tone-rhythm *1.0.0*
 
 > Generate an array of Tone.Transport times for use in Tone.Part
 
 
 ### src/tone-rhythm.js
+
+
+#### toneRhythm(ToneTime) 
+
+Factory to get tone-rhythm methods
+BREAKING CHANGE IN v1.0.0 - Tone is now a true "peer dependency" and needs to be included here:
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| ToneTime | `Object`  | - import of Tone.Time. example: const ToneTime = require('tone/Tone/type/Time'); | &nbsp; |
+
+
+
+
+##### Returns
+
+
+- `Object`  - tone-rhythm methods {     getBarsBeats,
+    addTimes,
+    getTransportTimes,
+    mergeMusicDataPart
+  }
+
 
 
 #### getBarsBeats(value) 

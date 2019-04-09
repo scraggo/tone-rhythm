@@ -1,6 +1,6 @@
 {
   "name": "tone-rhythm",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Generate an array of Tone.Transport times for use in Tone.Part",
   "main": "dist/tone-rhythm.min.js",
   "scripts": {
