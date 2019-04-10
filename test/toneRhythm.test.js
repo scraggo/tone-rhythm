@@ -3,7 +3,7 @@ const {
   addTimes,
   getTransportTimes,
   mergeMusicDataPart
-} = toneRhythm; // eslint-disable-line
+} = toneRhythm(Tone.Time); // eslint-disable-line
 
 const expect = chai.expect; // eslint-disable-line 
 
