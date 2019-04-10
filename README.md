@@ -48,17 +48,48 @@ Or clone the repo and copy `dist/tone-rhythm.min.js` into your project.
 
 ### Usage
 
-`import toneRhythm from 'tone-rhythm'`
+#### ES6 / Webpack
 
-or `import { mergeMusicDataPart } from 'tone-rhythm'`
+```js
+// tone is a required peer dependency
+import ToneTime from 'tone/Tone/type/Time';
 
-Or import `tone-rhythm.min.js` into html page:
+import toneRhythm from 'tone-rhythm';
+// any or all methods can be used in the instantiated toneRhythm:
+const {
+    getBarsBeats,
+    addTimes,
+    getTransportTimes,
+    mergeMusicDataPart
+} = toneRhythm(ToneTime);
+```
+
+#### Browser
 
 ```html
 <head>
+  <!-- Get tone from their CDN: -->
+  <script src="https://unpkg.com/tone@13.4.9/build/Tone.js"></script>
+  <!-- Import `tone-rhythm.min.js` from node_modules: -->
   <script src="node_modules/tone-rhythm/dist/tone-rhythm.min.js"></script>
+  <!-- OR simply provide your path/to/tone-rhythm.min.js -->
 </head>
 ```
+
+In your js file(s):
+
+```js
+const {
+  getBarsBeats,
+  addTimes,
+  getTransportTimes,
+  mergeMusicDataPart
+} = toneRhythm(Tone.Time); // both `toneRhythm` and `Tone.Time` are available globally
+```
+
+#### (Legacy) Pre-bundled with Tone
+
+See [docs/tone-rhythm@0.0.2.md](docs/tone-rhythm@0.0.2.md).
 
 ## API
 

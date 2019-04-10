@@ -1,5 +1,24 @@
 # tone-rhythm *0.0.0* through *0.0.2*
 
+**tone-rhythm@0.0.2.min.js is bundled with Tone.Time from tone@0.12.80** If this causes issues, I recommend upgrading to **tone-rhythm@1.0.0** so that you can bundle in your own version of tone as a dependency.
+
+## Usage
+
+`import toneRhythm from 'tone-rhythm'`
+
+or `import { mergeMusicDataPart } from 'tone-rhythm'`
+
+Or import `tone-rhythm.min.js` into html page:
+
+```html
+<head>
+  <!-- Import `tone-rhythm.min.js` from node_modules: -->
+  <script src="node_modules/tone-rhythm/dist/tone-rhythm.min.js"></script>
+    <!-- OR simply provide your path/to/tone-rhythm.min.js -->
+</head>
+```
+
+
 > Generate an array of Tone.Transport times for use in Tone.Part
 
 
