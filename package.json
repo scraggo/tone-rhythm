@@ -4,7 +4,8 @@
   "description": "Generate an array of Tone.Transport times for use in Tone.Part",
   "main": "dist/tone-rhythm.min.js",
   "scripts": {
-    "test": "npm run build && open index.html # RUNS IN BROWSER WITH MOCHA",
+    "test": "nyc mocha --exit './test/*.test.js'",
+    "test-browser": "npm run build && open index.html # RUNS IN BROWSER WITH MOCHA",
     "dev": "webpack --watch --mode development",
     "build": "webpack -p",
     "doc": "doxdox src/tone-rhythm.js --layout markdown --output DOCUMENTATION.md"
@@ -36,9 +37,24 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "doxdox": "^3.0.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "nyc": "^13.3.0",
+    "sinon": "^7.3.1"
   },
   "peerDependencies": {
     "tone": ">=0.12.0"
+  },
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js",
+      "public",
+      "**/test/**",
+      "**.js",
+      "testSetup"
+    ],
+    "reporter": [
+      "text",
+      "html"
+    ]
   }
 }

@@ -1,47 +1,81 @@
-const {
-  getBarsBeats,
-  addTimes,
-  getTransportTimes,
-  mergeMusicDataPart
-} = toneRhythm(Tone.Time); // eslint-disable-line
+const { expect } = require('chai');
+const sinon = require('sinon');
+const toneRhythm = require('../src/tone-rhythm');
 
-const expect = chai.expect; // eslint-disable-line 
+// prettier-ignore
+const mariaPitches = ['Eb4', 'A4', 'Bb4', 'Eb4', 'A4', 'Bb4', 'C5', 'A4', 'Bb4', 'C5', 'A4', 'Bb4', 'Bb4', 'A4', 'G4', 'F4', 'Eb4', 'F4', 'Bb4', 'Ab4', 'G4', 'F4', 'Eb4', 'F4', 'Eb4', 'G4', 'Eb4', 'A4', 'Bb4', 'Eb4', 'A4', 'Bb4', 'C5', 'A4', 'Bb4', 'C5', 'D5', 'Bb4', 'D5', 'Eb5', 'D5', 'C5', 'Bb4', 'D5', 'D5', 'Eb5', 'D5', 'C5', 'Bb4', 'D5', 'Eb5', 'F5'];
 
-/* eslint-disable max-len */
-const mariaPitches = ["Eb4", "A4", "Bb4", "Eb4", "A4", "Bb4", "C5", "A4", "Bb4", "C5", "A4", "Bb4", "Bb4", "A4", "G4", "F4", "Eb4", "F4", "Bb4", "Ab4", "G4", "F4", "Eb4", "F4", "Eb4", "G4", "Eb4", "A4", "Bb4", "Eb4", "A4", "Bb4", "C5", "A4", "Bb4", "C5", "D5", "Bb4", "D5", "Eb5", "D5", "C5", "Bb4", "D5", "D5", "Eb5", "D5", "C5", "Bb4", "D5", "Eb5", "F5"];
-
+// prettier-ignore
 const mariaDurations = ['8n', '8n', ['2n', '4n'], '8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n', ['2n', '4n'], '8n', '8n', '8n', '8n', '8n', ['4n', '8n'], '8n', '8n', '8n', '8n', '8n', '4n', '4n', ['2n', '4n', '8n'], '8n', '8n', ['2n', '4n'], '8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n', ['2n', '4n'], '8n', '8n', '8n', '8n', '8n', ['4n', '8n'], '8n', '8n', '8n', '8n', '8n', '4n', '4n', ['2n', '4n', '8n']];
 
+// prettier-ignore
 const mariaDurationsWithRests = ['8n', '16n', ['r', '16n'], '2n', ['r', '4n'], '8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n', ['2n', '4n'], '8n', '8n', '8n', '8n', '8n', ['4n', '8n'], '8n', '8n', '8n', '8n', '8n', '4n', '4n', ['2n', '4n', '8n'], '8n', '8n', ['2n', '4n'], '8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n', ['2n', '4n'], '8n', '8n', '8n', '8n', '8n', ['4n', '8n'], '8n', '8n', '8n', '8n', '8n', '4n', '4n', ['2n', '4n', '8n']];
 
-const mariaTransportTimes = [0, "0:0:2", "0:1:0", "1:0:0", "1:0:2", "1:1:0.667", "1:1:3.334", "1:2:2", "1:3:0.667", "1:3:3.334", "2:0:2", "2:1:0", "3:0:0", "3:0:2", "3:1:0", "3:1:2", "3:2:0", "3:2:2", "4:0:0", "4:0:2", "4:1:0", "4:1:2", "4:2:0", "4:2:2", "4:3:2", "5:0:2", "6:0:0", "6:0:2", "6:1:0", "7:0:0", "7:0:2", "7:1:0.667", "7:1:3.334", "7:2:2", "7:3:0.667", "7:3:3.334", "8:0:2", "8:1:0", "9:0:0", "9:0:2", "9:1:0", "9:1:2", "9:2:0", "9:2:2", "10:0:0", "10:0:2", "10:1:0", "10:1:2", "10:2:0", "10:2:2", "10:3:2", "11:0:2"];
+// prettier-ignore
+const mariaTransportTimes = [0, '0:0:2', '0:1:0', '1:0:0', '1:0:2', '1:1:0.667', '1:1:3.334', '1:2:2', '1:3:0.667', '1:3:3.334', '2:0:2', '2:1:0', '3:0:0', '3:0:2', '3:1:0', '3:1:2', '3:2:0', '3:2:2', '4:0:0', '4:0:2', '4:1:0', '4:1:2', '4:2:0', '4:2:2', '4:3:2', '5:0:2', '6:0:0', '6:0:2', '6:1:0', '7:0:0', '7:0:2', '7:1:0.667', '7:1:3.334', '7:2:2', '7:3:0.667', '7:3:3.334', '8:0:2', '8:1:0', '9:0:0', '9:0:2', '9:1:0', '9:1:2', '9:2:0', '9:2:2', '10:0:0', '10:0:2', '10:1:0', '10:1:2', '10:2:0', '10:2:2', '10:3:2', '11:0:2'];
 
 describe('tone-rhythm', () => {
   let testTransportTimes;
-  let err = false;
+  let badFunc;
+  let fakeToneTime;
+
+  let getBarsBeats;
+  let addTimes;
+  let getTransportTimes;
+  let mergeMusicDataPart;
+
   beforeEach(() => {
-    err = false;
+    badFunc = undefined;
+    fakeToneTime = sinon.fake.returns({
+      toBarsBeatsSixteenths: () => {}
+    });
+    ({
+      getBarsBeats,
+      addTimes,
+      getTransportTimes,
+      mergeMusicDataPart
+    } = toneRhythm(fakeToneTime));
+  });
+
+  describe('toneRhythm instantiation', () => {
+    it("throws error if toneRhythm isn't passed Tone.Time", () => {
+      badFunc = () => toneRhythm();
+      expect(badFunc).to.throw();
+    });
+    it('throws error if toneRhythm function is missing key property', () => {
+      badFunc = () => toneRhythm(() => {});
+      expect(badFunc).to.throw();
+    });
   });
   describe('getBarsBeats', () => {
     it('converts as expected', () => {
+      fakeToneTime = sinon.stub();
+      fakeToneTime.onCall(0).returns({
+        toBarsBeatsSixteenths: () => '0:1:0'
+      });
+      fakeToneTime.onCall(1).returns({
+        toBarsBeatsSixteenths: () => '0:2:0'
+      });
+      fakeToneTime.onCall(2).returns({
+        toBarsBeatsSixteenths: () => '0:1:0.001'
+      });
+      getBarsBeats = toneRhythm(fakeToneTime).getBarsBeats;
       expect(typeof getBarsBeats).to.equal('function');
       expect(getBarsBeats('4n')).to.equal('0:1:0');
       expect(getBarsBeats(1)).to.equal('0:2:0');
       expect(getBarsBeats('0:1:0.001')).to.equal('0:1:0');
     });
     it('errors if invalid type', () => {
-      try {
-        getBarsBeats(['4n']);
-      } catch (e) {
-        err = true;
-      }
-      expect(err).to.equal(true);
+      badFunc = () => getBarsBeats(['4n']);
+      expect(badFunc).to.throw();
     });
   });
   describe('addTimes', () => {
     it('addTimes works', () => {
       expect(typeof addTimes).to.equal('function');
-      expect(addTimes(['8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n'])).to.equal('1:1:0');
+      expect(
+        addTimes(['8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n'])
+      ).to.equal('1:1:0');
       expect(addTimes('4n.')).to.equal('4n.');
     });
   });
@@ -52,7 +86,9 @@ describe('tone-rhythm', () => {
       expect(testTransportTimes.length).to.equal(mariaDurations.length);
       /** yes, these are equivalent! */
       expect(testTransportTimes).to.deep.equal(mariaTransportTimes);
-      expect(getTransportTimes(mariaDurationsWithRests)).to.deep.equal(mariaTransportTimes);
+      expect(getTransportTimes(mariaDurationsWithRests)).to.deep.equal(
+        mariaTransportTimes
+      );
     });
     it('takes a start time', () => {
       testTransportTimes = getTransportTimes(mariaDurations, '0:3:2');
@@ -117,16 +153,12 @@ describe('tone-rhythm', () => {
       });
       expect(mergedData[0]).to.deep.equal({
         time: 0,
-        duration: '8n',
+        duration: '8n'
       });
     });
-    it('errors if `rhythms` aren\'t passed in', () => {
-      try {
-        mergeMusicDataPart({notes: mariaPitches});
-      } catch (e) {
-        err = true;
-      }
-      expect(err).to.equal(true);
+    it("errors if `rhythms` aren't passed in", () => {
+      badFunc = () => mergeMusicDataPart({ notes: mariaPitches });
+      expect(badFunc).to.throw();
     });
   });
 });

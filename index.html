@@ -20,10 +20,13 @@
     <!-- load code you want to test here -->
 
     <!-- load your test files here -->
-    <script src="test/toneRhythm.test.js"></script>
+    <script src="test/toneRhythmBrowserTest.js"></script>
 
     <script>
-      mocha.run();
+      function start() {
+        mocha.run();
+      }
+      window.onload = start;
     </script>
   </body>
 </html>
