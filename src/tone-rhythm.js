@@ -1,24 +1,12 @@
-// const ToneTime = require('tone/Tone/type/Time');
-
 /**
-tone-rhythm
-Given an array of rhythms, these methods contribute towards creating an
-array of Tone.Transport times given an array of musical rhythms in
-various formats that tone understands.
-API:
-Values which can populate a rhythms array:
-'4n' - a 'notation' value
-['4n', '8t'] - an array of 'notation' values which will be added together
-['r', '2n'] - an array that has 'r' at first index will be a rest
-['r', '2n', '8t'] - (see above about 'r') and the remaining values
-                     will be added together
-It's **not** recommended to use Tone's seconds format.
-see tests for concrete examples
+tone-rhythm 1.0.0
+https://github.com/scraggo/tone-rhythm
 */
 
 /**
  * Factory to get tone-rhythm methods
- * BREAKING CHANGE IN v1.0.0 - Tone is now a true "peer dependency" and needs to be included here:
+ *
+ * BREAKING CHANGE IN v1.0.0 - Tone is now a true "peer dependency" and needs to be included here.:
  * @param {Object} ToneTime - import of Tone.Time. example: const ToneTime = require('tone/Tone/type/Time');
  * @returns {Object} - tone-rhythm methods {
     getBarsBeats,
@@ -28,6 +16,18 @@ see tests for concrete examples
   }
  */
 const toneRhythm = (ToneTime) => {
+  /** Handle ToneTime dependency errors */
+  const help =
+    'See https://github.com/scraggo/tone-rhythm for more information.';
+  if (!ToneTime || typeof ToneTime !== 'function') {
+    throw new Error(`Tone.Time must be passed in as a dependency.\n${help}`);
+  }
+  if (typeof ToneTime().toBarsBeatsSixteenths !== 'function') {
+    throw new Error(
+      `Tone.Time dependency was not passed in correctly.\n${help}`
+    );
+  }
+
   /**
    * @param {string|number} value - a rhythm value Tone recognizes
    * @return {string} - rhythm value converted to Tone's bars/beats format.
