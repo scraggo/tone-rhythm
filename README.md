@@ -103,7 +103,7 @@ Values which can populate a rhythms array:
 
 It's **not** recommended to use Tone's seconds format.
 
-See [documentation](DOCUMENTATION.md) and below for tone-rhythm library usage.
+See [documentation](docs/tone-rhythm@latest.md) and below for tone-rhythm library usage.
 
 ## Examples ("Maria" by Leonard Bernstein)
 

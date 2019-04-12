@@ -1,7 +1,10 @@
-/**
-tone-rhythm 1.0.0
-https://github.com/scraggo/tone-rhythm
+/*
+!!! tone-rhythm 1.0.0
+!!! https://github.com/scraggo/tone-rhythm
 */
+
+const getHelp = (errNum) =>
+  `See https://github.com/scraggo/tone-rhythm ERROR_CODE_${errNum} for more information.`;
 
 /**
  * Factory to get tone-rhythm methods
@@ -16,17 +19,23 @@ https://github.com/scraggo/tone-rhythm
   }
  */
 const toneRhythm = (ToneTime) => {
-  /** Handle ToneTime dependency errors */
-  const help =
-    'See https://github.com/scraggo/tone-rhythm for more information.';
+  // Handle ToneTime dependency errors
   if (!ToneTime || typeof ToneTime !== 'function') {
-    throw new Error(`Tone.Time must be passed in as a dependency.\n${help}`);
+    throw new Error(
+      `Tone.Time must be passed in as a dependency.\n${getHelp(0)}`
+    );
   }
   if (typeof ToneTime().toBarsBeatsSixteenths !== 'function') {
     throw new Error(
-      `Tone.Time dependency was not passed in correctly.\n${help}`
+      `Tone.Time dependency was not passed in correctly.\n${getHelp(1)}`
     );
   }
+
+  // CONSTANTS
+  const roundMeToZero = new Set(['001', '002', '003', '004']);
+  const VALID_TYPES = {
+    getBarsBeats: new Set(['string', 'number'])
+  };
 
   /**
    * @param {string|number} value - a rhythm value Tone recognizes
@@ -34,13 +43,13 @@ const toneRhythm = (ToneTime) => {
    * @example getBarsBeats('4n') -> '0:1:0'
    */
   const getBarsBeats = (value) => {
-    const validTypes = new Set(['string', 'number']);
-    if (!validTypes.has(typeof value)) {
-      throw TypeError('Expected type string or type number.');
+    if (!VALID_TYPES.getBarsBeats.has(typeof value)) {
+      throw TypeError(
+        `Expected type string or type number for value. Got: ${value}`
+      );
     }
     const converted = ToneTime(value).toBarsBeatsSixteenths();
     const [prefix, decimal] = converted.split('.');
-    const roundMeToZero = new Set(['001', '002', '003', '004']);
     if (roundMeToZero.has(decimal)) {
       return prefix;
     }

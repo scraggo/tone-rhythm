@@ -9,7 +9,8 @@
 #### toneRhythm(ToneTime) 
 
 Factory to get tone-rhythm methods
-BREAKING CHANGE IN v1.0.0 - Tone is now a true "peer dependency" and needs to be included here:
+
+BREAKING CHANGE IN v1.0.0 - Tone is now a true "peer dependency" and needs to be included here.:
 
 
 

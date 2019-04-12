@@ -1,11 +1,13 @@
+/* global chai, toneRhythm, Tone */
+
 const {
   getBarsBeats,
   addTimes,
   getTransportTimes,
   mergeMusicDataPart
-} = toneRhythm(Tone.Time); // eslint-disable-line no-undef
+} = toneRhythm(Tone.Time);
 
-const expect = chai.expect; // eslint-disable-line no-undef
+const expect = chai.expect;
 
 /* eslint-disable max-len */
 // prettier-ignore
@@ -28,19 +30,35 @@ describe('tone-rhythm', () => {
   });
   describe('toneRhythm instantiation', () => {
     it("throws error if toneRhythm isn't passed Tone.Time", () => {
-      badFunc = () => toneRhythm(); // eslint-disable-line no-undef
+      badFunc = () => toneRhythm();
       expect(badFunc).to.throw();
     });
-    it('throws error if toneRhythm function is missing key property', () => {
-      badFunc = () => toneRhythm(() => {}); // eslint-disable-line no-undef
+    it('throws error if toneRhythm function is missing toBarsBeatsSixteenths property', () => {
+      badFunc = () => toneRhythm(() => '');
       expect(badFunc).to.throw();
+    });
+    it('returns an object with the 4 library functions', () => {
+      const {
+        getBarsBeats: f1,
+        addTimes: f2,
+        getTransportTimes: f3,
+        mergeMusicDataPart: f4
+      } = toneRhythm(Tone.Time);
+      expect(typeof f1).to.equal('function');
+      expect(typeof f2).to.equal('function');
+      expect(typeof f3).to.equal('function');
+      expect(typeof f4).to.equal('function');
     });
   });
   describe('getBarsBeats', () => {
-    it('converts as expected', () => {
+    it('is a function', () => {
       expect(typeof getBarsBeats).to.equal('function');
+    });
+    it('converts as expected, no decimal', () => {
       expect(getBarsBeats('4n')).to.equal('0:1:0');
       expect(getBarsBeats(1)).to.equal('0:2:0');
+    });
+    it('converts as expected, with decimal', () => {
       expect(getBarsBeats('0:1:0.001')).to.equal('0:1:0');
     });
     it('errors if invalid type', () => {
@@ -136,6 +154,10 @@ describe('tone-rhythm', () => {
     });
     it("errors if `rhythms` aren't passed in", () => {
       badFunc = () => mergeMusicDataPart({ notes: mariaPitches });
+      expect(badFunc).to.throw();
+    });
+    it("errors if `rhythms` aren't array", () => {
+      badFunc = () => mergeMusicDataPart({ notes: mariaPitches, rhythms: '' });
       expect(badFunc).to.throw();
     });
   });
