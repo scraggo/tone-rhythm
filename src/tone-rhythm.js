@@ -102,14 +102,14 @@ const toneRhythm = (ToneTime) => {
   };
 
   /**
-   * see [README.md](README.md) for examples
+   * see [README.md](README.md) for examples and return values.
    * @param {Object} config (see properties below)
    * @param {Array} config.rhythms - see API
    * @param {string[]} [config.notes] - ex: ['C4', 'D4', 'E4']
    * @param {Array} [config.times] - see return of `getTransportTimes`
    * @param {string|number} [config.startTime] - see startTime of `getTransportTimes`
    * @return {Array} of objects for consumption by Tone.Part.
-   * Object properties always include `time` (number|string), array index `idx` (number - integer) and `duration` (string). May also include `notes` and `velocities`.
+   * Object properties always include `time` (number|string), array index `idx` (number - integer) and `duration` (string). May also include `notes` and `velocities`. (see readme)
    */
   const mergeMusicDataPart = (config) => {
     const { notes, rhythms, velocities, startTime } = config;
