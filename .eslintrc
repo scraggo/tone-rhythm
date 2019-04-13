@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "semi": [1, "always"],
+    "no-debugger": 1,
+    "comma-dangle": [1, "always-multiline"],
+    "arrow-parens": ["error", "always"],
+    "camelcase": 1,
+    "consistent-return": 1,
+    "max-len": 0,
+    "no-plusplus": 1,
+    "no-underscore-dangle": 1,
+    "object-curly-spacing": ["error", "always"]
+  }
+}

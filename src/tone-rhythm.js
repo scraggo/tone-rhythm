@@ -34,7 +34,7 @@ const toneRhythm = (ToneTime) => {
   // CONSTANTS
   const roundMeToZero = new Set(['001', '002', '003', '004']);
   const VALID_TYPES = {
-    getBarsBeats: new Set(['string', 'number'])
+    getBarsBeats: new Set(['string', 'number']),
   };
 
   /**
@@ -124,7 +124,7 @@ const toneRhythm = (ToneTime) => {
       const musicData = {
         duration: addTimes(rhythm),
         idx: idx,
-        time: times[idx]
+        time: times[idx],
       };
       if (notes) musicData.note = notes[idx];
       if (velocities) musicData.velocity = velocities[idx];
@@ -136,7 +136,7 @@ const toneRhythm = (ToneTime) => {
     getBarsBeats,
     addTimes,
     getTransportTimes,
-    mergeMusicDataPart
+    mergeMusicDataPart,
   };
 };
 

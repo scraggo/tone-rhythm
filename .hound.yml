@@ -1,0 +1,4 @@
+esversion: 6
+eslint:
+  version: 5.7.0
+  ignore_file: .eslintignore
