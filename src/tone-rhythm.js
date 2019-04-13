@@ -109,27 +109,29 @@ const toneRhythm = (ToneTime) => {
    * @param {Array} [config.times] - see return of `getTransportTimes`
    * @param {string|number} [config.startTime] - see startTime of `getTransportTimes`
    * @return {Array} of objects for consumption by Tone.Part.
-   * Object properties always include time and duration. May also include notes and velocities.
+   * Object properties always include `time` (number|string), array index `idx` (number - integer) and `duration` (string). May also include `notes` and `velocities`.
    */
   const mergeMusicDataPart = (config) => {
     const { notes, rhythms, velocities, startTime } = config;
     let { times } = config;
     if (!rhythms || !Array.isArray(rhythms)) {
-      throw TypeError('Expected "rhythms" property with type "Array"');
+      throw TypeError('Expected "rhythms" property of type "Array"');
     }
     if (!times) {
       times = getTransportTimes(rhythms, startTime);
     }
-    return rhythms.map((rhythm, i) => {
+    return rhythms.map((rhythm, idx) => {
       const musicData = {
-        time: times[i],
-        duration: addTimes(rhythm)
+        duration: addTimes(rhythm),
+        idx: idx,
+        time: times[idx]
       };
-      if (notes) musicData.note = notes[i];
-      if (velocities) musicData.velocity = velocities[i];
+      if (notes) musicData.note = notes[idx];
+      if (velocities) musicData.velocity = velocities[idx];
       return musicData;
     });
   };
+
   return {
     getBarsBeats,
     addTimes,
