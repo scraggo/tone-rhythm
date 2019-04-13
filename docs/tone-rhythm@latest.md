@@ -1,4 +1,4 @@
-# tone-rhythm *1.0.0*
+# tone-rhythm *1.1.0*
 
 > Generate an array of Tone.Transport times for use in Tone.Part
 
@@ -126,7 +126,7 @@ see [README.md](README.md) for examples
 
 #### mergeMusicDataPart(config) 
 
-see [README.md](README.md) for examples
+see [README.md](README.md) for examples and return values.
 
 
 
@@ -147,7 +147,7 @@ see [README.md](README.md) for examples
 ##### Returns
 
 
-- `Array`  of objects for consumption by Tone.Part. Object properties always include time and duration. May also include notes and velocities.
+- `Array`  of objects for consumption by Tone.Part. Object properties always include `time` (number|string), array index `idx` (number - integer) and `duration` (string). May also include `notes` and `velocities`. (see readme)
 
 
 

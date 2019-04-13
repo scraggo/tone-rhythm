@@ -1,5 +1,21 @@
 # Changelog
 
+## v1.1.0 Apr 13, 2019
+
+Feature: Add `idx` property to return of `mergeMusicDataPart`. `idx` is exactly equal to the array index in the returned data:
+
+```js
+const mergedData = mergeMusicDataPart({
+    rhythms: mariaDurations
+});
+// mergedData[0]:
+// {
+//     duration: '8n',
+//     idx: 0,
+//     time: 0
+// };
+```
+
 ## v1.0.0 Apr 9, 2019
 
 BREAKING CHANGE - Tone is now a true "peer dependency" and needs to be included in the toneRhythm factory function:

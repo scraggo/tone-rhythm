@@ -6,18 +6,20 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'tone-rhythm.min.js',
     library: 'toneRhythm',
-    libraryTarget : "umd",
+    libraryTarget: 'umd',
   },
   resolve: {
-    modules: ['node_modules/', 'node_modules/tone']
+    modules: ['node_modules/', 'node_modules/tone'],
   },
   module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      use: {
-        loader: "babel-loader"
-      }
-    }]
-  }
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+    ],
+  },
 };

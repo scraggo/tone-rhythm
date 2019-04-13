@@ -4,7 +4,7 @@ const {
   getBarsBeats,
   addTimes,
   getTransportTimes,
-  mergeMusicDataPart
+  mergeMusicDataPart,
 } = toneRhythm(Tone.Time);
 
 const expect = chai.expect;
@@ -42,7 +42,7 @@ describe('tone-rhythm', () => {
         getBarsBeats: f1,
         addTimes: f2,
         getTransportTimes: f3,
-        mergeMusicDataPart: f4
+        mergeMusicDataPart: f4,
       } = toneRhythm(Tone.Time);
       expect(typeof f1).to.equal('function');
       expect(typeof f2).to.equal('function');
@@ -67,8 +67,10 @@ describe('tone-rhythm', () => {
     });
   });
   describe('addTimes', () => {
-    it('addTimes works', () => {
+    it('is a function', () => {
       expect(typeof addTimes).to.equal('function');
+    });
+    it('addTimes works', () => {
       expect(
         addTimes(['8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n'])
       ).to.equal('1:1:0');
@@ -76,8 +78,10 @@ describe('tone-rhythm', () => {
     });
   });
   describe('getTransportTimes', () => {
-    it('works as expected', () => {
+    it('is a function', () => {
       expect(typeof getTransportTimes).to.equal('function');
+    });
+    it('works as expected', () => {
       testTransportTimes = getTransportTimes(mariaDurations);
       expect(testTransportTimes.length).to.equal(mariaDurations.length);
       /** yes, these are equivalent! */
@@ -93,63 +97,79 @@ describe('tone-rhythm', () => {
     });
   });
   describe('mergeMusicDataPart', () => {
-    it('works with just `rhythms` property', () => {
+    it('is a function', () => {
       expect(typeof mergeMusicDataPart).to.equal('function');
-      const mergedData = mergeMusicDataPart({
-        rhythms: mariaDurations
-      });
-      expect(mergedData[0]).to.deep.equal({
-        time: 0,
-        duration: '8n'
-      });
     });
+    describe('mergeMusicDataPart -> with just rhythm: mariaDurations', () => {
+      let mergedData = mergeMusicDataPart({
+        rhythms: mariaDurations,
+      });
+      it('has the expected length', () => {
+        expect(mergedData.length).to.equal(mariaDurations.length);
+      });
+      it('has the expected properties', () => {
+        mergedData.forEach((item) => {
+          const { duration, idx, time } = item;
+          expect(typeof duration).to.equal('string');
+          expect(typeof idx).to.equal('number');
+          expect(typeof time).to.be.oneOf(['number', 'string']);
+        });
+      });
+      it('works with just `rhythms` property', () => {
+        expect(mergedData[0]).to.deep.equal({
+          duration: '8n',
+          idx: 0,
+          time: 0,
+        });
+      });
+    }); // end inner describe
     it('works with `times` and `rhythms` properties', () => {
-      expect(typeof mergeMusicDataPart).to.equal('function');
       const mergedData = mergeMusicDataPart({
         rhythms: mariaDurations,
-        times: mariaTransportTimes
+        times: mariaTransportTimes,
       });
       expect(mergedData[0]).to.deep.equal({
+        duration: '8n',
+        idx: 0,
         time: 0,
-        duration: '8n'
       });
     });
     it('works with `notes` `times` and `rhythms` properties', () => {
-      expect(typeof mergeMusicDataPart).to.equal('function');
       const mergedData = mergeMusicDataPart({
         rhythms: mariaDurations,
         times: mariaTransportTimes,
-        notes: mariaPitches
+        notes: mariaPitches,
       });
       expect(mergedData[0]).to.deep.equal({
-        time: 0,
         duration: '8n',
-        note: 'Eb4'
+        idx: 0,
+        note: 'Eb4',
+        time: 0,
       });
     });
     it('works with `startTime` `notes` and `rhythms` properties', () => {
-      expect(typeof mergeMusicDataPart).to.equal('function');
       const mergedData = mergeMusicDataPart({
         rhythms: mariaDurations,
         notes: mariaPitches,
-        startTime: '0:3:2'
+        startTime: '0:3:2',
       });
       expect(mergedData[0]).to.deep.equal({
-        time: '0:3:2',
         duration: '8n',
-        note: 'Eb4'
+        idx: 0,
+        note: 'Eb4',
+        time: '0:3:2',
       });
     });
     it('ignores `startTime` if `times` are passed in', () => {
-      expect(typeof mergeMusicDataPart).to.equal('function');
       const mergedData = mergeMusicDataPart({
         rhythms: mariaDurations,
         times: mariaTransportTimes,
-        startTime: '0:3:2'
+        startTime: '0:3:2',
       });
       expect(mergedData[0]).to.deep.equal({
+        duration: '8n',
+        idx: 0,
         time: 0,
-        duration: '8n'
       });
     });
     it("errors if `rhythms` aren't passed in", () => {

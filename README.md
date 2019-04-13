@@ -9,9 +9,9 @@ Written for exclusive use with [Tone.js](https://tonejs.github.io/).
 
 ## Features
 
-- Works with latest version of Tone (as of Oct 6, 2018)
+- Works with latest version of Tone (v0.12.8 - v13.4.0)
 - Works in-browser (transpiled) or in node (ES6)
-- Light footprint (16kb)
+- Light footprint (3.47kb minified)
 - Intuitive and fully-documented API
 
 ### Why use tone-rhythm?
@@ -87,7 +87,7 @@ const {
 } = toneRhythm(Tone.Time); // both `toneRhythm` and `Tone.Time` are available globally
 ```
 
-#### (Legacy) Pre-bundled with Tone
+#### (Legacy) Pre-bundled with Tone 0.12.8
 
 See [docs/tone-rhythm@0.0.2.md](docs/tone-rhythm@0.0.2.md).
 
@@ -132,12 +132,12 @@ const mergedData = mergeMusicDataPart({
   notes: mariaPitches,
   startTime: '0:3:2'
 }); /* -> [
-  {time: "0:3:2", duration: "8n", note: "Eb4"},
-  {time: "1:0:0", duration: "8n", note: "A4"},
-  {time: "1:0:2", duration: "0:3:0", note: "Bb4"},
-  {time: "1:3:2", duration: "8n", note: "Eb4"},
-  {time: "2:0:0", duration: "4t", note: "A4"},
-  {time: "2:0:2.667", duration: "4t", note: "Bb4"},
+  {time: "0:3:2", duration: "8n", note: "Eb4", idx: 0},
+  {time: "1:0:0", duration: "8n", note: "A4", idx: 1},
+  {time: "1:0:2", duration: "0:3:0", note: "Bb4", idx: 2},
+  {time: "1:3:2", duration: "8n", note: "Eb4", idx: 3},
+  {time: "2:0:0", duration: "4t", note: "A4", idx: 4},
+  {time: "2:0:2.667", duration: "4t", note: "Bb4", idx: 5},
   ...
 ]
 */
@@ -151,9 +151,12 @@ const melodyPart = new Tone.Part((time, value) => {
 }, mergedData).start(0);
 ```
 
-## Running the tests
+## Contributing
 
-`npm run test` - opens the tests in-browser
+Running the tests:
+
+- `npm run dev` - build in dev mode and watch for changes
+- `npm run test` - opens the tests in-browser
 
 ## Acknowledgments
 
