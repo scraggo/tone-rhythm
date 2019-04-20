@@ -3,7 +3,7 @@
 [![Latest Documentation](https://doxdox.org/images/badge-flat.svg)](https://doxdox.org/)
 
 Generate an array of Tone.Transport times given an array of musical rhythms in
-various formats that tone understands.
+various formats that [Tone.js](https://tonejs.github.io/) understands.
 
 Written for exclusive use with [Tone.js](https://tonejs.github.io/).
 

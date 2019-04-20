@@ -1,14 +1,14 @@
 const { validateDeps } = require('./utils');
 
 /*
-!!! tone-rhythm 1.0.0
+!!! tone-rhythm 1.2.0
 !!! https://github.com/scraggo/tone-rhythm
 */
 
 /**
  * Factory to get tone-rhythm methods
  *
- * BREAKING CHANGE IN v1.0.0 - Tone is now a true "peer dependency" and needs to be included here.:
+ * BREAKING CHANGE IN v1.0.0 - Tone is now a true "peer dependency" and needs to be included here:
  * @param {Object} ToneTime - import of Tone.Time. example: const ToneTime = require('tone/Tone/type/Time');
  * @returns {Object} - tone-rhythm methods {
     getBarsBeats,
