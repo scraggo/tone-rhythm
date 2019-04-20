@@ -29,13 +29,11 @@ describe('tone-rhythm', () => {
     badFunc = undefined;
   });
   describe('toneRhythm instantiation', () => {
-    it("throws error if toneRhythm isn't passed Tone.Time", () => {
-      badFunc = () => toneRhythm();
-      expect(badFunc).to.throw();
+    it("doesn't throw error if toneRhythm isn't passed Tone.Time", () => {
+      expect(() => toneRhythm()).not.to.throw();
     });
-    it('throws error if toneRhythm function is missing toBarsBeatsSixteenths property', () => {
-      badFunc = () => toneRhythm(() => '');
-      expect(badFunc).to.throw();
+    it("doesn't throw error if toneRhythm function is missing toBarsBeatsSixteenths property", () => {
+      expect(() => toneRhythm(() => '')).not.to.throw();
     });
     it('returns an object with the 4 library functions', () => {
       const {
@@ -51,6 +49,16 @@ describe('tone-rhythm', () => {
     });
   });
   describe('getBarsBeats', () => {
+    it("throws if ToneTime isn't passed in", () => {
+      const tr = toneRhythm();
+      badFunc = () => tr.getBarsBeats('4n');
+      expect(badFunc).to.throw();
+    });
+    it("throws if ToneTime isn't passed in with expected API (is missing toBarsBeatsSixteenths property)", () => {
+      const tr = toneRhythm(() => '');
+      badFunc = () => tr.getBarsBeats('4n');
+      expect(badFunc).to.throw();
+    });
     it('is a function', () => {
       expect(typeof getBarsBeats).to.equal('function');
     });
