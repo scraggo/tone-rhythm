@@ -1,15 +1,14 @@
+const { validateDeps } = require('./utils');
+
 /*
-!!! tone-rhythm 1.0.0
+!!! tone-rhythm 1.2.0
 !!! https://github.com/scraggo/tone-rhythm
 */
-
-const getHelp = (errNum) =>
-  `See https://github.com/scraggo/tone-rhythm ERROR_CODE_${errNum} for more information.`;
 
 /**
  * Factory to get tone-rhythm methods
  *
- * BREAKING CHANGE IN v1.0.0 - Tone is now a true "peer dependency" and needs to be included here.:
+ * BREAKING CHANGE IN v1.0.0 - Tone is now a true "peer dependency" and needs to be included here:
  * @param {Object} ToneTime - import of Tone.Time. example: const ToneTime = require('tone/Tone/type/Time');
  * @returns {Object} - tone-rhythm methods {
     getBarsBeats,
@@ -19,18 +18,6 @@ const getHelp = (errNum) =>
   }
  */
 const toneRhythm = (ToneTime) => {
-  // Handle ToneTime dependency errors
-  if (!ToneTime || typeof ToneTime !== 'function') {
-    throw new Error(
-      `Tone.Time must be passed in as a dependency.\n${getHelp(0)}`
-    );
-  }
-  if (typeof ToneTime().toBarsBeatsSixteenths !== 'function') {
-    throw new Error(
-      `Tone.Time dependency was not passed in correctly.\n${getHelp(1)}`
-    );
-  }
-
   // CONSTANTS
   const roundMeToZero = new Set(['001', '002', '003', '004']);
   const VALID_TYPES = {
@@ -43,6 +30,7 @@ const toneRhythm = (ToneTime) => {
    * @example getBarsBeats('4n') -> '0:1:0'
    */
   const getBarsBeats = (value) => {
+    validateDeps(ToneTime);
     if (!VALID_TYPES.getBarsBeats.has(typeof value)) {
       throw TypeError(
         `Expected type string or type number for value. Got: ${value}`
