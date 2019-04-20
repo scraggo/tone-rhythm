@@ -1,4 +1,4 @@
-# tone-rhythm *1.1.0*
+# tone-rhythm *1.2.0*
 
 > Generate an array of Tone.Transport times for use in Tone.Part
 
@@ -10,7 +10,7 @@
 
 Factory to get tone-rhythm methods
 
-BREAKING CHANGE IN v1.0.0 - Tone is now a true "peer dependency" and needs to be included here.:
+BREAKING CHANGE IN v1.0.0 - Tone is now a true "peer dependency" and needs to be included here:
 
 
 
