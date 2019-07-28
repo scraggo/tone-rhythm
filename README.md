@@ -1,7 +1,5 @@
 # tone-rhythm
 
-[![Latest Documentation](https://doxdox.org/images/badge-flat.svg)](https://doxdox.org/)
-
 Generate an array of Tone.Transport times given an array of musical rhythms in
 various formats that [Tone.js](https://tonejs.github.io/) understands.
 
@@ -12,7 +10,8 @@ Written for exclusive use with [Tone.js](https://tonejs.github.io/).
 - Works with latest version of Tone (v0.12.8 - v13.4.0)
 - Works in-browser (transpiled) or in node (ES6)
 - Light footprint (3.47kb minified)
-- Intuitive and fully-documented API
+- Intuitive for musicians
+- Has a [fully-documented API](docs/tone-rhythm@latest.md) with examples below.
 
 ### Why use tone-rhythm?
 
@@ -54,7 +53,7 @@ Or clone the repo and copy `dist/tone-rhythm.min.js` into your project.
 // tone is a required peer dependency
 import ToneTime from 'tone/Tone/type/Time';
 
-import toneRhythm from 'tone-rhythm';
+import { toneRhythm } from 'tone-rhythm';
 // any or all methods can be used in the instantiated toneRhythm:
 const {
     getBarsBeats,
@@ -84,7 +83,7 @@ const {
   addTimes,
   getTransportTimes,
   mergeMusicDataPart
-} = toneRhythm(Tone.Time); // both `toneRhythm` and `Tone.Time` are available globally
+} = toneRhythm.toneRhythm(Tone.Time); // both `toneRhythm` and `Tone.Time` are available globally from imports above
 ```
 
 #### (Legacy) Pre-bundled with Tone 0.12.8
@@ -161,3 +160,5 @@ Running the tests:
 ## Acknowledgments
 
 Thank you [https://www.guitarland.com](https://www.guitarland.com) and the creator of [Tone.js](https://tonejs.github.io/).
+
+Documentation created with [jsdoc2md](https://github.com/jsdoc2md/jsdoc-to-markdown)

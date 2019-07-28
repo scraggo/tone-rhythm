@@ -1,14 +1,9 @@
 const { validateDeps } = require('./utils');
 
-/*
-!!! tone-rhythm 1.2.0
-!!! https://github.com/scraggo/tone-rhythm
-*/
-
 /**
  * Factory to get tone-rhythm methods
- *
- * BREAKING CHANGE IN v1.0.0 - Tone is now a true "peer dependency" and needs to be included here:
+ * @version tone-rhythm 2.0.0
+ * @author https://github.com/scraggo/tone-rhythm
  * @param {Object} ToneTime - import of Tone.Time. example: const ToneTime = require('tone/Tone/type/Time');
  * @returns {Object} - tone-rhythm methods {
     getBarsBeats,
@@ -18,6 +13,7 @@ const { validateDeps } = require('./utils');
   }
  */
 const toneRhythm = (ToneTime) => {
+  validateDeps(ToneTime);
   // CONSTANTS
   const roundMeToZero = new Set(['001', '002', '003', '004']);
   const VALID_TYPES = {
@@ -30,7 +26,6 @@ const toneRhythm = (ToneTime) => {
    * @example getBarsBeats('4n') -> '0:1:0'
    */
   const getBarsBeats = (value) => {
-    validateDeps(ToneTime);
     if (!VALID_TYPES.getBarsBeats.has(typeof value)) {
       throw TypeError(
         `Expected type string or type number for value. Got: ${value}`
@@ -128,4 +123,4 @@ const toneRhythm = (ToneTime) => {
   };
 };
 
-module.exports = toneRhythm;
+module.exports = { toneRhythm };
