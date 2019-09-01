@@ -5,6 +5,7 @@ const { validateDeps } = require('./utils');
  * @version tone-rhythm 2.0.0
  * @author https://github.com/scraggo/tone-rhythm
  * @param {Object} ToneTime - import of Tone.Time. example: const ToneTime = require('tone/Tone/type/Time');
+ * @throws Error if ToneTime dependency isn't valid
  * @returns {Object} - tone-rhythm methods {
     getBarsBeats,
     addTimes,
@@ -21,9 +22,10 @@ const toneRhythm = (ToneTime) => {
   };
 
   /**
-   * @param {string|number} value - a rhythm value Tone recognizes
-   * @return {string} - rhythm value converted to Tone's bars/beats format.
    * @example getBarsBeats('4n') -> '0:1:0'
+   * @param {string|number} value - a rhythm value Tone recognizes
+   * @throws TypeError if value isn't valid type
+   * @return {string} - rhythm value converted to Tone's bars/beats format.
    */
   const getBarsBeats = (value) => {
     if (!VALID_TYPES.getBarsBeats.has(typeof value)) {
@@ -91,6 +93,7 @@ const toneRhythm = (ToneTime) => {
    * @param {string[]} [config.notes] - ex: ['C4', 'D4', 'E4']
    * @param {Array} [config.times] - see return of `getTransportTimes`
    * @param {string|number} [config.startTime] - see startTime of `getTransportTimes`
+   * @throws TypeError if value isn't valid type
    * @return {Array} of objects for consumption by Tone.Part.
    * Object properties always include `time` (number|string), array index `idx` (number - integer) and `duration` (string). May also include `notes` and `velocities`. (see readme)
    */

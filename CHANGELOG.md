@@ -1,6 +1,6 @@
 # Changelog
 
-## v2.0.0
+## v2.0.0 [MAJOR]
 
 Fix: Dependencies are evaluated only once instead of every function call.
 
@@ -25,7 +25,7 @@ const {
   } = toneRhythm(Tone.Time)
 ```
 
-## v1.2.0 Apr 20, 2019
+## v1.2.0 [MINOR] Apr 20, 2019
 
 Fix/Feature: Allow instantiation if tone-rhythm without throwing an error. Error will be thrown at run-time if Tone.Time is passed in incorrectly:
 
@@ -34,7 +34,7 @@ const toneRhythm = require('tone-rhythm')(()=>{}); // doesn't throw error
 toneRhythm.mergeMusicDataPart({ /* data */}); // throws error
 ```
 
-## v1.1.0 Apr 13, 2019
+## v1.1.0 [MINOR] Apr 13, 2019
 
 Feature: Add `idx` property to return of `mergeMusicDataPart`. `idx` is exactly equal to the array index in the returned data:
 
@@ -50,7 +50,7 @@ const mergedData = mergeMusicDataPart({
 // };
 ```
 
-## v1.0.0 Apr 9, 2019
+## v1.0.0 [MAJOR] Apr 9, 2019
 
 BREAKING CHANGE - Tone is now a true "peer dependency" and needs to be included in the toneRhythm factory function:
 

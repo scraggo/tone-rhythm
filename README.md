@@ -31,7 +31,7 @@ synth.triggerAttackRelease('E4', '2n', '0:3')
 
 The third parameter in `triggerAttackRelease` is the start time of the note we're triggering. Musicians don't normally consider where a note is in a timeline when composing music. I needed a way to calculate this ahead of time.
 
-I found enlightenment after reading [Music Theory using Tone.js - Play Rhythms](https://www.guitarland.com/MusicTheoryWithToneJS/PlayRhythms.html). If you have an array of durations, accumulating the rhythmic values to generate a start time is the approach the article took to making rhythmic music with Tone. I adapted and modified one of the author's algorithms.
+I found enlightenment after reading [Music Theory using Tone.js - Play Rhythms](https://www.guitarland.com/MusicTheoryWithToneJS/PlayRhythms.html). Based on the author's work, I created algorithms that accumulate rhythmic values in an array of durations to generate start times. The result feels much more intuitive to me (please see the examples below.)
 
 ## Getting Started
 
@@ -97,8 +97,7 @@ Values which can populate a rhythms array:
 - '4n' - a 'notation' value
 - ['4n', '8t'] - an array of 'notation' values which will be added together
 - ['r', '2n'] - an array that has 'r' at first index will be a rest
-- ['r', '2n', '8t'] - (see above about 'r') and the remaining values
-                     will be added together
+- ['r', '2n', '8t'] - (see above about 'r') and the remaining values will be added together
 
 It's **not** recommended to use Tone's seconds format.
 
@@ -108,7 +107,7 @@ See [documentation](docs/tone-rhythm@latest.md) and below for tone-rhythm librar
 
 ### toneRhythm.getTransportTimes
 
-Given an array of durations (see API), return transport times.
+Given an array of durations (see API), return transport times. `Array<String|Number>`
 
 ```js
 const mariaDurations = ['8n', '8n', ['2n', '4n'], '8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n', ['2n', '4n'], '8n', '8n', '8n', '8n', '8n', ['4n', '8n'], '8n', '8n', '8n', '8n', '8n', '4n', '4n', ['2n', '4n', '8n'], '8n', '8n', ['2n', '4n'], '8n', '4t', '4t', '4t', '4t', '4t', '4t', '8n', ['2n', '4n'], '8n', '8n', '8n', '8n', '8n', ['4n', '8n'], '8n', '8n', '8n', '8n', '8n', '4n', '4n', ['2n', '4n', '8n']];

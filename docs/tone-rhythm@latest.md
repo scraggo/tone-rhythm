@@ -10,6 +10,10 @@ Factory to get tone-rhythm methods
     getTransportTimes,
     mergeMusicDataPart
   }  
+**Throws**:
+
+- Error if ToneTime dependency isn't valid
+
 **Version**: tone-rhythm 2.0.0  
 **Author**: https://github.com/scraggo/tone-rhythm  
 
@@ -29,6 +33,10 @@ Factory to get tone-rhythm methods
 ### toneRhythm~getBarsBeats(value) ⇒ <code>string</code>
 **Kind**: inner method of [<code>toneRhythm</code>](#toneRhythm)  
 **Returns**: <code>string</code> - - rhythm value converted to Tone's bars/beats format.  
+**Throws**:
+
+- TypeError if value isn't valid type
+
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -80,6 +88,10 @@ see [README.md](README.md) for examples and return values.
 **Kind**: inner method of [<code>toneRhythm</code>](#toneRhythm)  
 **Returns**: <code>Array</code> - of objects for consumption by Tone.Part.
 Object properties always include `time` (number|string), array index `idx` (number - integer) and `duration` (string). May also include `notes` and `velocities`. (see readme)  
+**Throws**:
+
+- TypeError if value isn't valid type
+
 
 | Param | Type | Description |
 | --- | --- | --- |
