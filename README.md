@@ -9,7 +9,7 @@ Written for exclusive use with [Tone.js](https://tonejs.github.io/).
 
 - Works with latest version of Tone (v0.12.8 - v13.4.0)
 - Works in-browser (transpiled) or in node (ES6)
-- Light footprint (3.47kb minified)
+- Light footprint (3.6kB minified)
 - Intuitive for musicians
 - Has a [fully-documented API](docs/tone-rhythm@latest.md) with examples below.
 
@@ -65,12 +65,26 @@ const {
 
 #### Browser
 
+Via node_modules:
+
 ```html
 <head>
-  <!-- Get tone from their CDN: -->
+  <!-- Get tone from unpkg CDN: -->
   <script src="https://unpkg.com/tone@13.4.9/build/Tone.js"></script>
   <!-- Import `tone-rhythm.min.js` from node_modules: -->
   <script src="node_modules/tone-rhythm/dist/tone-rhythm.min.js"></script>
+  <!-- OR simply provide your path/to/tone-rhythm.min.js -->
+</head>
+```
+
+Via <https://unpkg.com/tone-rhythm>
+
+```html
+<head>
+  <!-- Get tone from unpkg CDN: -->
+  <script src="https://unpkg.com/tone@13.4.9/build/Tone.js"></script>
+  <!-- Get tone-rhythm from unpkg CDN: -->
+  <script src="https://unpkg.com/tone-rhythm@2.0.0/dist/tone-rhythm.min.js"></script>
   <!-- OR simply provide your path/to/tone-rhythm.min.js -->
 </head>
 ```
