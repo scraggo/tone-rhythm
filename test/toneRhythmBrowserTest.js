@@ -1,11 +1,12 @@
 /* global chai, toneRhythm, Tone */
 
+const { toneRhythm: trFactory } = toneRhythm;
 const {
   getBarsBeats,
   addTimes,
   getTransportTimes,
   mergeMusicDataPart,
-} = toneRhythm(Tone.Time);
+} = toneRhythm.toneRhythm(Tone.Time);
 
 const expect = chai.expect;
 
@@ -28,12 +29,12 @@ describe('tone-rhythm', () => {
   beforeEach(() => {
     badFunc = undefined;
   });
-  describe('toneRhythm instantiation', () => {
-    it("doesn't throw error if toneRhythm isn't passed Tone.Time", () => {
-      expect(() => toneRhythm()).not.to.throw();
+  describe('toneRhythm instantiation / `validateDeps`', () => {
+    it("throws error if ToneTime isn't passed in", () => {
+      expect(() => trFactory()).to.throw();
     });
-    it("doesn't throw error if toneRhythm function is missing toBarsBeatsSixteenths property", () => {
-      expect(() => toneRhythm(() => '')).not.to.throw();
+    it("throws error if ToneTime isn't passed in with expected API (is missing toBarsBeatsSixteenths property)", () => {
+      expect(() => trFactory(() => '')).to.throw();
     });
     it('returns an object with the 4 library functions', () => {
       const {
@@ -41,26 +42,16 @@ describe('tone-rhythm', () => {
         addTimes: f2,
         getTransportTimes: f3,
         mergeMusicDataPart: f4,
-      } = toneRhythm(Tone.Time);
-      expect(typeof f1).to.equal('function');
-      expect(typeof f2).to.equal('function');
-      expect(typeof f3).to.equal('function');
-      expect(typeof f4).to.equal('function');
+      } = trFactory(Tone.Time);
+      expect(f1).to.be.a('function');
+      expect(f2).to.be.a('function');
+      expect(f3).to.be.a('function');
+      expect(f4).to.be.a('function');
     });
   });
   describe('getBarsBeats', () => {
-    it("throws if ToneTime isn't passed in", () => {
-      const tr = toneRhythm();
-      badFunc = () => tr.getBarsBeats('4n');
-      expect(badFunc).to.throw();
-    });
-    it("throws if ToneTime isn't passed in with expected API (is missing toBarsBeatsSixteenths property)", () => {
-      const tr = toneRhythm(() => '');
-      badFunc = () => tr.getBarsBeats('4n');
-      expect(badFunc).to.throw();
-    });
     it('is a function', () => {
-      expect(typeof getBarsBeats).to.equal('function');
+      expect(getBarsBeats).to.be.a('function');
     });
     it('converts as expected, no decimal', () => {
       expect(getBarsBeats('4n')).to.equal('0:1:0');
@@ -76,7 +67,7 @@ describe('tone-rhythm', () => {
   });
   describe('addTimes', () => {
     it('is a function', () => {
-      expect(typeof addTimes).to.equal('function');
+      expect(addTimes).to.be.a('function');
     });
     it('addTimes works', () => {
       expect(
@@ -87,7 +78,7 @@ describe('tone-rhythm', () => {
   });
   describe('getTransportTimes', () => {
     it('is a function', () => {
-      expect(typeof getTransportTimes).to.equal('function');
+      expect(getTransportTimes).to.be.a('function');
     });
     it('works as expected', () => {
       testTransportTimes = getTransportTimes(mariaDurations);
@@ -118,8 +109,8 @@ describe('tone-rhythm', () => {
       it('has the expected properties', () => {
         mergedData.forEach((item) => {
           const { duration, idx, time } = item;
-          expect(typeof duration).to.equal('string');
-          expect(typeof idx).to.equal('number');
+          expect(duration).to.be.a('string');
+          expect(idx).to.be.a('number');
           expect(typeof time).to.be.oneOf(['number', 'string']);
         });
       });

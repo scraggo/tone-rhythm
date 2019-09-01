@@ -1,15 +1,11 @@
 const { validateDeps } = require('./utils');
 
-/*
-!!! tone-rhythm 1.2.0
-!!! https://github.com/scraggo/tone-rhythm
-*/
-
 /**
  * Factory to get tone-rhythm methods
- *
- * BREAKING CHANGE IN v1.0.0 - Tone is now a true "peer dependency" and needs to be included here:
+ * @version tone-rhythm 2.0.0
+ * @author https://github.com/scraggo/tone-rhythm
  * @param {Object} ToneTime - import of Tone.Time. example: const ToneTime = require('tone/Tone/type/Time');
+ * @throws Error if ToneTime dependency isn't valid
  * @returns {Object} - tone-rhythm methods {
     getBarsBeats,
     addTimes,
@@ -18,6 +14,7 @@ const { validateDeps } = require('./utils');
   }
  */
 const toneRhythm = (ToneTime) => {
+  validateDeps(ToneTime);
   // CONSTANTS
   const roundMeToZero = new Set(['001', '002', '003', '004']);
   const VALID_TYPES = {
@@ -25,12 +22,12 @@ const toneRhythm = (ToneTime) => {
   };
 
   /**
-   * @param {string|number} value - a rhythm value Tone recognizes
-   * @return {string} - rhythm value converted to Tone's bars/beats format.
    * @example getBarsBeats('4n') -> '0:1:0'
+   * @param {string|number} value - a rhythm value Tone recognizes
+   * @throws TypeError if value isn't valid type
+   * @return {string} - rhythm value converted to Tone's bars/beats format.
    */
   const getBarsBeats = (value) => {
-    validateDeps(ToneTime);
     if (!VALID_TYPES.getBarsBeats.has(typeof value)) {
       throw TypeError(
         `Expected type string or type number for value. Got: ${value}`
@@ -96,6 +93,7 @@ const toneRhythm = (ToneTime) => {
    * @param {string[]} [config.notes] - ex: ['C4', 'D4', 'E4']
    * @param {Array} [config.times] - see return of `getTransportTimes`
    * @param {string|number} [config.startTime] - see startTime of `getTransportTimes`
+   * @throws TypeError if value isn't valid type
    * @return {Array} of objects for consumption by Tone.Part.
    * Object properties always include `time` (number|string), array index `idx` (number - integer) and `duration` (string). May also include `notes` and `velocities`. (see readme)
    */
@@ -128,4 +126,4 @@ const toneRhythm = (ToneTime) => {
   };
 };
 
-module.exports = toneRhythm;
+module.exports = { toneRhythm };
